@@ -111,6 +111,14 @@ defmodule WePager.DataTest do
       assert project.name == "some name"
     end
 
+    test "create_new_project/3" do
+      assert {:ok, %Project{} = project} = Data.create_new_project("test", %{debug: true},  ~N[2010-04-17 14:00:00.000000])
+      assert project.expiry_date == ~N[2010-04-17 14:00:00.000000]
+      assert project.meta == %{debug: true}
+      assert project.name == "test"
+      assert project.project_name_id != nil
+    end
+
     test "create_project/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Data.create_project(@invalid_attrs)
     end

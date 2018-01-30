@@ -4,8 +4,8 @@ defmodule WePagerWeb.RecordControllerTest do
   alias WePager.Data
   alias WePager.Data.Record
 
-  @create_attrs %{body: %{}, meta_active: true, meta_name: "some meta_name", meta_order: 42, meta_type: "some meta_type"}
-  @update_attrs %{body: %{}, meta_active: false, meta_name: "some updated meta_name", meta_order: 43, meta_type: "some updated meta_type"}
+  @create_attrs %{body: %{test: true, embed: [1, 3, 4]}, meta_active: true, meta_name: "some meta_name", meta_order: 42, meta_type: "some meta_type"}
+  @update_attrs %{body: %{test: false}, meta_active: false, meta_name: "some updated meta_name", meta_order: 43, meta_type: "some updated meta_type"}
   @invalid_attrs %{body: nil, meta_active: nil, meta_name: nil, meta_order: nil, meta_type: nil}
 
   def fixture(:record) do
@@ -39,7 +39,7 @@ defmodule WePagerWeb.RecordControllerTest do
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "project_name_id" => "abcdefghjlk",
-        "body" => %{},
+        "body" => %{"test" => true, "embed" => [1,3,4]},
         "meta_active" => true,
         "meta_name" => "some meta_name",
         "meta_order" => 42,
@@ -63,7 +63,7 @@ defmodule WePagerWeb.RecordControllerTest do
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
         "project_name_id" => "abcdefghjlk",
-        "body" => %{},
+        "body" => %{"test" => false},
         "meta_active" => false,
         "meta_name" => "some updated meta_name",
         "meta_order" => 43,

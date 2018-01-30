@@ -156,11 +156,22 @@ defmodule WePager.Data do
       {:error, %Ecto.Changeset{}}
 
   """
+  def create_new_project(name, meta, expiry_date) do
+    project_name_id = Nanoid.generate(10, "abcdefghijklmnpqrstuvwxyz")
+    attrs = %{
+      name: name,
+      meta: meta,
+      expiry_date: expiry_date,
+      project_name_id: project_name_id
+    }
+    create_project(attrs)
+  end
   def create_project(attrs \\ %{}) do
     %Project{}
     |> Project.changeset(attrs)
     |> Repo.insert()
   end
+
 
   @doc """
   Updates a project.
