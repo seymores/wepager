@@ -3,6 +3,7 @@ defmodule WePager.Data.Record do
   import Ecto.Changeset
   alias WePager.Data.{Record, Project}
 
+  @derive {Poison.Encoder, only: [:body, :id, :project_name_id]}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
