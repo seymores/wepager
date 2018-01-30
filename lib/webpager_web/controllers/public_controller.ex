@@ -7,13 +7,11 @@ defmodule WePagerWeb.PublicController do
   action_fallback WePagerWeb.FallbackController
 
   def index(conn, %{"meta_type" => meta_type, "project_name_id" => project_name_id} = params) do
-    IO.inspect params
 
     start = String.to_integer(params["page"] || "0")
     size = String.to_integer(params["size"] || "50")
 
     records = Data.list_records(start, size)
-    IO.inspect records
     json(conn, records)
     # render(conn, "index.json", records: records)
   end

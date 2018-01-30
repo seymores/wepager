@@ -10,7 +10,7 @@ defmodule WePager.Data.Record do
   schema "records" do
     field :project_name_id, :string
     field :body, :map
-    field :meta_active, :boolean, default: false
+    field :meta_active, :boolean, default: true
     field :meta_name, :string
     field :meta_order, :integer
     field :meta_type, :string
