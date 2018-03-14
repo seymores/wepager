@@ -11,12 +11,16 @@ defmodule WePagerWeb.RecordView do
   end
 
   def render("record.json", %{record: record}) do
-    %{id: record.id,
-      meta_type: record.meta_type,
-      meta_name: record.meta_name,
-      meta_order: record.meta_order,
-      meta_active: record.meta_active,
-      body: record.body,
-      project_name_id: record.project_name_id}
+    %{
+      id: record.id,
+      meta: %{
+        type: record.meta_type || "",
+        name: record.meta_name || "",
+        order: record.meta_order || 0,
+        active: record.meta_active || true
+      },
+      project_name_id: record.project_name_id,
+      body: record.body || %{}
+    } |> Map.merge(record.body)
   end
 end

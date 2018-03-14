@@ -40,10 +40,15 @@ defmodule WePagerWeb.RecordControllerTest do
         "id" => id,
         "project_name_id" => "abcdefghjlk",
         "body" => %{"test" => true, "embed" => [1,3,4]},
-        "meta_active" => true,
-        "meta_name" => "some meta_name",
-        "meta_order" => 42,
-        "meta_type" => "some meta_type"}
+        "meta" => %{
+          "active" => true,
+          "name" => "some meta_name",
+          "order" => 42,
+          "type" => "some meta_type"
+        },
+        "test" => true,
+        "embed" => [1,3,4]
+      }
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -64,10 +69,14 @@ defmodule WePagerWeb.RecordControllerTest do
         "id" => id,
         "project_name_id" => "abcdefghjlk",
         "body" => %{"test" => false},
-        "meta_active" => false,
-        "meta_name" => "some updated meta_name",
-        "meta_order" => 43,
-        "meta_type" => "some updated meta_type"}
+        "meta" => %{
+          "active" => true,
+          "name" => "some updated meta_name",
+          "order" => 43,
+          "type" => "some updated meta_type"
+        },
+        "test" => false
+      }
     end
 
     test "renders errors when data is invalid", %{conn: conn, record: record} do
