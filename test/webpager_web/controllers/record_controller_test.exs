@@ -28,6 +28,7 @@ defmodule WePagerWeb.RecordControllerTest do
   end
 
   describe "create record" do
+
     test "renders record when data is valid", %{conn: conn} do
       {:ok, project} = Data.create_project(%{expiry_date: nil, meta: %{}, name: "some name", project_name_id: "abcdefghjlk"})
       attrs = Map.merge(@create_attrs, %{project_id: project.id, project_name_id: project.project_name_id})
@@ -48,6 +49,28 @@ defmodule WePagerWeb.RecordControllerTest do
         },
         "test" => true,
         "embed" => [1,3,4]
+      }
+    end
+
+    test "renders record with 'meta' field", %{conn: conn} do
+      {:ok, project} = Data.create_project(%{expiry_date: nil, meta: %{}, name: "some name", project_name_id: "abcdefghjlk"})
+      attrs = Map.merge(@create_attrs, %{project_id: project.id, project_name_id: project.project_name_id, body: %{meta: "xxx"}, mouse_x: 122, mouse_y: 888})
+
+      conn = post conn, record_path(conn, :create), record: attrs
+      assert %{"id" => id} = json_response(conn, 201)["data"]
+
+      conn = get conn, record_path(conn, :show, id)
+      assert json_response(conn, 200)["data"] == %{
+        "id" => id,
+        "project_name_id" => "abcdefghjlk",
+        "body" => %{"meta" => "xxx"},
+        "meta" => %{
+          "active" => true,
+          "name" => "some meta_name",
+          "order" => 42,
+          "type" => "some meta_type"
+        },
+        "warning" => "meta field is illegal and ignored"
       }
     end
 
